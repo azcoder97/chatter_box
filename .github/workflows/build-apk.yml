@@ -3,8 +3,8 @@ name: Flutter APK CI/CD
 on:
   push:
     branches:
-      - authentication  # or the branch you want to build from
-  workflow_dispatch: # allows manual run from GitHub UI
+      - main   # build on pushes to main
+  workflow_dispatch: # allow manual trigger from GitHub UI
 
 jobs:
   build:
@@ -12,17 +12,18 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: 'stable'
+          flutter-version: '3.35.2'
+          channel: 'stable'
 
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Build APK
+      - name: Build APK (Release)
         run: flutter build apk --release
 
       - name: Upload APK
