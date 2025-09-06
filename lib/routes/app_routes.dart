@@ -11,7 +11,8 @@ class AppRoutes {
   static const resetPasswordScreen = '/resetPasswordScreen';
 
   // dashboard
-  static const dashBoardScreen = '/dashboardScreen';
+  static const chatListScreen = '/chatListScreen';
+  static const chatScreen = '/chatScreen';
 
   // individual project
   static const roomsListScreen = '/rooms_list_screen';

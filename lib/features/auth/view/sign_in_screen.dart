@@ -1,5 +1,6 @@
 import 'package:chatter_box/core/widgets/custom_button.dart';
 import 'package:chatter_box/core/widgets/custom_text_field.dart';
+import 'package:chatter_box/features/auth/controllers/sign_in_controller.dart';
 import 'package:chatter_box/features/auth/widgets/auth_header.dart';
 import 'package:chatter_box/routes/app_routes.dart';
 import 'package:flutter/gestures.dart';
@@ -7,7 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SignInScreen extends StatelessWidget {
-  const SignInScreen({super.key});
+  SignInScreen({super.key});
+
+  final signInController = Get.put(SignInController());
 
   @override
   Widget build(BuildContext context) {
@@ -23,19 +26,30 @@ class SignInScreen extends StatelessWidget {
                 title: 'Welcome Back',
                 subtitle: 'Sign in to continue',
               ),
-              CustomTextField(
-                hint: 'Email',
-                keyboardType: TextInputType.emailAddress,
+              Obx(
+                () => CustomTextField(
+                  hint: 'Email',
+                  keyboardType: TextInputType.emailAddress,
+                  onChanged: (value) => signInController.email.value = value,
+                  errorText: signInController.emailError.value,
+                ),
               ),
               const SizedBox(height: 16),
-              CustomTextField(hint: 'Password', obscureText: true),
+              Obx(
+                () => CustomTextField(
+                  hint: 'Password',
+                  obscureText: true,
+                  onChanged: (value) => signInController.password.value = value,
+                  errorText: signInController.passwordError.value,
+                ),
+              ),
               const SizedBox(height: 16),
               // Forgot Password link
               Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(
                   onPressed: () {
-                    Get.toNamed(AppRoutes.resetPasswordScreen);
+                    Get.offAllNamed(AppRoutes.resetPasswordScreen);
                   },
                   child: Text(
                     'Forgot Password?',
@@ -48,7 +62,13 @@ class SignInScreen extends StatelessWidget {
               ),
 
               const SizedBox(height: 16),
-              CustomButton(text: 'Sign In', onPressed: () {}),
+              Obx(
+                () => CustomButton(
+                  text: 'Sign In',
+                  isLoading: signInController.isLoading.value,
+                  onPressed: () => signInController.signIn(),
+                ),
+              ),
               const SizedBox(height: 16),
               Center(
                 child: RichText(
@@ -67,7 +87,7 @@ class SignInScreen extends StatelessWidget {
                         ),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            Get.toNamed(AppRoutes.signUpScreen);
+                            Get.offAllNamed(AppRoutes.signUpScreen);
                           },
                       ),
                     ],

@@ -1,13 +1,17 @@
 import 'package:chatter_box/core/widgets/custom_button.dart';
 import 'package:chatter_box/core/widgets/custom_text_field.dart';
+import 'package:chatter_box/features/auth/controllers/sign_up_controller.dart';
 import 'package:chatter_box/features/auth/widgets/auth_header.dart';
+import 'package:chatter_box/routes/app_routes.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/get_navigation.dart';
+import 'package:get/get.dart';
 
 class SignUpScreen extends StatelessWidget {
-  const SignUpScreen({super.key});
+  SignUpScreen({super.key});
+
+  // Register controller once when screen is built
+  final signUpController = Get.put(SignUpController());
 
   @override
   Widget build(BuildContext context) {
@@ -23,25 +27,49 @@ class SignUpScreen extends StatelessWidget {
                 title: 'Create Account',
                 subtitle: 'Sign up to get started',
               ),
-              CustomTextField(
-                hint: 'Full Name',
-                keyboardType: TextInputType.name,
+              Obx(
+                () => CustomTextField(
+                  hint: 'Full Name',
+                  keyboardType: TextInputType.name,
+                  onChanged: (value) => signUpController.fullName.value = value,
+                  errorText: signUpController.fullNameError.value,
+                ),
               ),
               const SizedBox(height: 16),
-              CustomTextField(
-                hint: 'Email',
-                keyboardType: TextInputType.emailAddress,
+              Obx(
+                () => CustomTextField(
+                  hint: 'Email',
+                  keyboardType: TextInputType.emailAddress,
+                  onChanged: (value) => signUpController.email.value = value,
+                  errorText: signUpController.emailError.value,
+                ),
               ),
               const SizedBox(height: 16),
-              CustomTextField(hint: 'Password', obscureText: true),
+              Obx(
+                () => CustomTextField(
+                  hint: 'Password',
+                  obscureText: true,
+                  onChanged: (value) => signUpController.password.value = value,
+                  errorText: signUpController.passwordError.value,
+                ),
+              ),
               const SizedBox(height: 16),
-              CustomTextField(hint: 'Confirm Password', obscureText: true),
+              Obx(
+                () => CustomTextField(
+                  hint: 'Confirm Password',
+                  obscureText: true,
+                  onChanged: (value) =>
+                      signUpController.confirmPassword.value = value,
+                  errorText: signUpController.confirmPasswordError.value,
+                ),
+              ),
               const SizedBox(height: 24),
-              CustomButton(
-                text: 'Sign Up',
-                onPressed: () {
-                  // handle sign up
-                },
+              Obx(
+                () => CustomButton(
+                  text: 'Sign Up',
+                  isLoading: signUpController.isLoading.value,
+                  onPressed: () => signUpController.signUp(),
+                ),
               ),
               const SizedBox(height: 16),
               Center(
@@ -59,7 +87,7 @@ class SignUpScreen extends StatelessWidget {
                         ),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            Get.back();
+                            Get.offAllNamed(AppRoutes.signInScreen);
                           },
                       ),
                     ],

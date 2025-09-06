@@ -1,32 +1,50 @@
-name: Flutter APK CI/CD
+name: Flutter CI/CD
 
 on:
   push:
     branches:
-      - authentication  # or the branch you want to build from
-  workflow_dispatch: # allows manual run from GitHub UI
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      # Step 1: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Flutter
+      # Step 2: Setup Flutter
+      - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: 'stable'
+          flutter-version: '3.35.2' # Use your Flutter version
 
+      # Step 3: Install dependencies
       - name: Install dependencies
         run: flutter pub get
 
+      # Step 4: Run static analysis (lint)
+      - name: Analyze
+        run: flutter analyze
+
+      # Step 5: Run tests
+      - name: Run tests
+        run: flutter test --coverage
+
+      # Step 6: Build APK
       - name: Build APK
         run: flutter build apk --release
 
+      # Step 7: Upload APK artifact
       - name: Upload APK
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: app-release.apk
           path: build/app/outputs/flutter-apk/app-release.apk

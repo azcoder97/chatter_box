@@ -1,12 +1,15 @@
 import 'package:chatter_box/core/widgets/custom_button.dart';
 import 'package:chatter_box/core/widgets/custom_text_field.dart';
+import 'package:chatter_box/features/auth/controllers/reset_password_controller.dart';
 import 'package:chatter_box/features/auth/widgets/auth_header.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ResetPasswordScreen extends StatelessWidget {
-  const ResetPasswordScreen({super.key});
+  ResetPasswordScreen({super.key});
+
+  final resetPasswordController = Get.put(ResetPasswordController());
 
   @override
   Widget build(BuildContext context) {
@@ -20,27 +23,29 @@ class ResetPasswordScreen extends StatelessWidget {
             children: [
               const AuthHeader(
                 title: 'Reset Password',
-                subtitle: 'Enter your email to receive password reset instructions',
+                subtitle:
+                    'Enter your email to receive password reset instructions',
               ),
 
               // Email input
-              CustomTextField(
-                hint: 'Email',
-                keyboardType: TextInputType.emailAddress,
+              Obx(
+                () => CustomTextField(
+                  hint: 'Email',
+                  keyboardType: TextInputType.emailAddress,
+                  onChanged: (value) =>
+                      resetPasswordController.email.value = value,
+                  errorText: resetPasswordController.emailError.value,
+                ),
               ),
               const SizedBox(height: 24),
 
               // Reset Password Button
-              CustomButton(
-                text: 'Send Reset Link',
-                onPressed: () {
-                  // Handle reset password logic here
-                  Get.snackbar(
-                    'Success',
-                    'Password reset link sent to your email',
-                    snackPosition: SnackPosition.BOTTOM,
-                  );
-                },
+              Obx(
+                () => CustomButton(
+                  text: 'Send Reset Link',
+                  isLoading: resetPasswordController.isLoading.value,
+                  onPressed: () => resetPasswordController.resetPassword()
+                ),
               ),
               const SizedBox(height: 16),
 
