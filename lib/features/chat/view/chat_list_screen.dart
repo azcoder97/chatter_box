@@ -4,9 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../widgets/chat_tile.dart';
 
-import 'package:flutter/material.dart';
-import '../widgets/chat_tile.dart';
-
 class ChatListScreen extends StatelessWidget {
   const ChatListScreen({super.key});
 
