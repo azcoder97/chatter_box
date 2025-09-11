@@ -3,11 +3,11 @@ name: Flutter CI/CD
 on:
   push:
     branches:
-      - main
-      - develop
+      - master
+      - authentication
   pull_request:
     branches:
-      - main
+      - master
       - authentication
 
 jobs:
