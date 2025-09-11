@@ -1,8 +1,8 @@
 import 'package:chatter_box/features/chat/models/chat_screen_args.dart';
+import 'package:chatter_box/features/chat/widgets/chat_tile.dart';
 import 'package:chatter_box/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../widgets/chat_tile.dart';
 
 class ChatListScreen extends StatelessWidget {
   const ChatListScreen({super.key});
