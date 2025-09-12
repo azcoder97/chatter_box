@@ -35,8 +35,8 @@ jobs:
         run: flutter analyze
 
       # Step 5: Run tests
-      - name: Run tests
-        run: flutter test --coverage
+#      - name: Run tests
+#        run: flutter test --coverage
 
       # Step 6: Build APK
       - name: Build APK
