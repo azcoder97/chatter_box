@@ -14,6 +14,9 @@ class AppRoutes {
   static const chatListScreen = '/chatListScreen';
   static const chatScreen = '/chatScreen';
 
+  // Setting
+  static const settingsScreen = '/settingsScreen';
+
   // individual project
   static const roomsListScreen = '/rooms_list_screen';
   static const inspectionHistoryScreen = '/inspection_history_screen';

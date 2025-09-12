@@ -16,7 +16,7 @@ class ChatListScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text("ChatterBox"),
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.settings)),
+          IconButton(onPressed: () => Get.toNamed(AppRoutes.settingsScreen), icon: const Icon(Icons.settings)),
         ],
       ),
       body: Column(

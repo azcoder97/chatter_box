@@ -4,6 +4,7 @@ import 'package:chatter_box/features/auth/view/sign_up_screen.dart';
 import 'package:chatter_box/features/chat/models/chat_screen_args.dart';
 import 'package:chatter_box/features/chat/view/chat_list_screen.dart';
 import 'package:chatter_box/features/chat/view/chat_screen.dart';
+import 'package:chatter_box/features/settings/view/setting_screen.dart';
 import 'package:chatter_box/routes/app_routes.dart';
 import 'package:get/get.dart';
 
@@ -58,6 +59,11 @@ class AppPages {
         final args = Get.arguments as ChatScreenArgs;
         return ChatScreen(userName: args.userName, avatarUrl: args.avatarUrl);
       },
+      transition: transition,
+    ),
+    GetPage(
+      name: AppRoutes.settingsScreen,
+      page: () => SettingsScreen(),
       transition: transition,
     ),
   ];

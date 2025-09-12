@@ -1,4 +1,3 @@
-import 'package:chatter_box/features/chat/widgets/animated_dot_widget.dart';
 import 'package:chatter_box/features/chat/widgets/build_message_bubble_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -26,7 +25,7 @@ class ChatScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        leadingWidth: 70,
+        leadingWidth: 90,
         leading: Row(
           children: [
             IconButton(
@@ -39,8 +38,11 @@ class ChatScreen extends StatelessWidget {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(userName, style: const TextStyle(fontWeight: FontWeight.bold)),
             Text(
+              userName,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            ),
+            const Text(
               'Online',
               style: TextStyle(fontSize: 12, color: Colors.greenAccent),
             ),
@@ -79,17 +81,7 @@ class ChatScreen extends StatelessWidget {
             ),
           ),
 
-          // Typing Indicator (Animated dots using TweenAnimationBuilder)
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: List.generate(
-                3,
-                (index) => animatedDot(isDarkMode, index),
-              ),
-            ),
-          ),
+          // ✅ Removed Typing Indicator
 
           // Message Input
           Container(
@@ -118,7 +110,6 @@ class ChatScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 8),
-                // Send Button with implicit scale animation
                 TweenAnimationBuilder(
                   tween: Tween<double>(begin: 1.0, end: 1.0),
                   duration: const Duration(milliseconds: 100),
@@ -140,11 +131,4 @@ class ChatScreen extends StatelessWidget {
       ),
     );
   }
-}
-
-// Simple message model
-class Message {
-  final String text;
-  final bool isSender;
-  Message({required this.text, required this.isSender});
 }
