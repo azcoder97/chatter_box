@@ -10,10 +10,7 @@ class SettingsScreen extends StatelessWidget {
     final ThemeController themeController = Get.find<ThemeController>();
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Settings"),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text("Settings"), centerTitle: true),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -25,12 +22,15 @@ class SettingsScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 24,
+                  horizontal: 16,
+                ),
                 child: Column(
                   children: [
                     CircleAvatar(
                       radius: 40,
-                      backgroundColor: Colors.deepPurple.withOpacity(0.1),
+                      backgroundColor: Colors.deepPurple.withValues(alpha: 0.1),
                       backgroundImage: const NetworkImage(
                         "https://ui-avatars.com/api/?name=Guest+User",
                       ),
@@ -46,11 +46,9 @@ class SettingsScreen extends StatelessWidget {
                     Text(
                       "guest@example.com",
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Theme.of(context)
-                            .textTheme
-                            .bodySmall
-                            ?.color
-                            ?.withOpacity(0.7),
+                        color: Theme.of(
+                          context,
+                        ).textTheme.bodySmall?.color?.withValues(alpha: 0.7),
                       ),
                     ),
                   ],
@@ -71,7 +69,9 @@ class SettingsScreen extends StatelessWidget {
                     return ListTile(
                       leading: const Icon(Icons.brightness_6_outlined),
                       title: const Text("Theme"),
-                      subtitle: const Text("Choose system, light, or dark mode"),
+                      subtitle: const Text(
+                        "Choose system, light, or dark mode",
+                      ),
                       trailing: DropdownButton<int>(
                         value: themeController.themeIndex.value,
                         underline: const SizedBox(),
@@ -125,4 +125,3 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 }
-
