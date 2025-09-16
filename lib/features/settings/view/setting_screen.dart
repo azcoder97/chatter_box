@@ -1,6 +1,5 @@
 import 'package:chatter_box/core/bindings/theme_controller.dart';
 import 'package:chatter_box/features/auth/services/firebase_auth_service.dart';
-import 'package:chatter_box/routes/app_pages.dart';
 import 'package:chatter_box/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
