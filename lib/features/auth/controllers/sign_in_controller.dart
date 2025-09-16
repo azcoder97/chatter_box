@@ -1,9 +1,12 @@
 import 'package:chatter_box/core/utils/validators.dart';
+import 'package:chatter_box/features/auth/services/firebase_auth_service.dart';
 import 'package:chatter_box/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SignInController extends GetxController {
+  final FirebaseAuthService _authService = Get.find();
+
   // -----------------------------
   // Reactive field values
   // -----------------------------
@@ -41,7 +44,7 @@ class SignInController extends GetxController {
       isLoading.value = true;
 
       // 🔑 Call your API / Firebase Auth here
-      await Future.delayed(const Duration(seconds: 3)); // Mock API call
+      await _authService.signIn(email.value.trim(), password.value.trim());
 
       // Show success
       Get.snackbar('Success', 'Signed In successfully!');

@@ -1,9 +1,17 @@
 import 'package:chatter_box/core/utils/validators.dart';
+import 'package:chatter_box/features/auth/services/firebase_auth_service.dart';
 import 'package:chatter_box/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SignUpController extends GetxController {
+  // Firebase Auth Service
+  // ✅ Injecting the already registered FirebaseAuthService instance
+  // using GetX's dependency injection system.
+  // This ensures we always use the same service instance that was created
+  // in AuthBinding, avoiding multiple FirebaseAuth instances in memory.
+  final FirebaseAuthService _authService = Get.find();
+
   // -----------------------------
   // Reactive field values
   // -----------------------------
@@ -53,7 +61,11 @@ class SignUpController extends GetxController {
       isLoading.value = true;
 
       // 🔑 Call your API / Firebase Auth here
-      await Future.delayed(const Duration(seconds: 3)); // Mock API call
+      await _authService.signUp(
+        email.value.trim(),
+        password.value.trim(),
+        fullName.value.trim(),
+      );
 
       // Show success
       Get.snackbar('Success', 'Account created successfully!');

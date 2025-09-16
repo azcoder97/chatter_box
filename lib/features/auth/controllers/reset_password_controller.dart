@@ -1,8 +1,11 @@
+import 'package:chatter_box/features/auth/services/firebase_auth_service.dart';
+import 'package:chatter_box/routes/app_routes.dart';
 import 'package:get/get.dart';
 import 'package:chatter_box/core/utils/validators.dart';
 import 'package:flutter/material.dart';
 
 class ResetPasswordController extends GetxController {
+  final FirebaseAuthService _authService = Get.find();
   // -----------------------------
   // Reactive field values
   // -----------------------------
@@ -36,7 +39,7 @@ class ResetPasswordController extends GetxController {
       isLoading.value = true;
 
       // 🔑 Call your API / Firebase password reset here
-      await Future.delayed(const Duration(seconds: 2)); // Mock API call
+      await _authService.resetPassword(email.value.trim());
 
       // Handle reset password logic here
       Get.snackbar(
@@ -44,6 +47,9 @@ class ResetPasswordController extends GetxController {
         'Password reset link sent to your email',
         snackPosition: SnackPosition.BOTTOM,
       );
+
+      // Navigate to next screen (home/dashboard)
+      Get.offAllNamed(AppRoutes.signInScreen);
     } catch (e) {
       Get.snackbar(
         'Error',

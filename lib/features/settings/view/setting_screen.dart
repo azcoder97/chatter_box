@@ -1,4 +1,7 @@
 import 'package:chatter_box/core/bindings/theme_controller.dart';
+import 'package:chatter_box/features/auth/services/firebase_auth_service.dart';
+import 'package:chatter_box/routes/app_pages.dart';
+import 'package:chatter_box/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -8,6 +11,15 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeController themeController = Get.find<ThemeController>();
+    final FirebaseAuthService authService = Get.find<FirebaseAuthService>();
+    final user = authService.currentUser; // ✅ Get current user
+
+    String getInitials(String name) {
+      final parts = name.trim().split(' ');
+      if (parts.isEmpty) return '';
+      if (parts.length == 1) return parts[0][0].toUpperCase();
+      return (parts[0][0] + parts.last[0]).toUpperCase();
+    }
 
     return Scaffold(
       appBar: AppBar(title: const Text("Settings"), centerTitle: true),
@@ -26,29 +38,53 @@ class SettingsScreen extends StatelessWidget {
                   vertical: 24,
                   horizontal: 16,
                 ),
-                child: Column(
+                child: Row(
                   children: [
                     CircleAvatar(
-                      radius: 40,
-                      backgroundColor: Colors.deepPurple.withValues(alpha: 0.1),
-                      backgroundImage: const NetworkImage(
-                        "https://ui-avatars.com/api/?name=Guest+User",
-                      ),
+                      radius: 30,
+                      backgroundColor: Colors.deepPurple.withValues(alpha: 0.2),
+                      backgroundImage: user?.photoURL != null
+                          ? NetworkImage(
+                              user!.photoURL!,
+                            ) // ✅ If profile picture exists
+                          : null, // ❌ No image, fallback to initials
+                      child: user?.photoURL == null
+                          ? Text(
+                              getInitials(user?.displayName ?? "Guest User"),
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            )
+                          : null,
                     ),
-                    const SizedBox(height: 12),
-                    Text(
-                      "Guest User",
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      "guest@example.com",
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Theme.of(
-                          context,
-                        ).textTheme.bodySmall?.color?.withValues(alpha: 0.7),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            user?.displayName ?? "Guest User",
+                            style: Theme.of(context).textTheme.titleLarge
+                                ?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            user?.email ?? "guest@example.com",
+                            style: Theme.of(context).textTheme.bodyMedium
+                                ?.copyWith(
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .bodySmall
+                                      ?.color
+                                      ?.withValues(alpha: 0.6),
+                                ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
@@ -115,8 +151,9 @@ class SettingsScreen extends StatelessWidget {
               ),
               icon: const Icon(Icons.logout),
               label: const Text("Logout"),
-              onPressed: () {
-                // TODO: Connect with your AuthController
+              onPressed: () async {
+                await authService.signOut();
+                Get.offAllNamed(AppRoutes.signInScreen);
               },
             ),
           ],

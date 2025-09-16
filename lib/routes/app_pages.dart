@@ -1,3 +1,4 @@
+import 'package:chatter_box/core/bindings/auth_binding.dart';
 import 'package:chatter_box/features/auth/view/reset_password_screen.dart';
 import 'package:chatter_box/features/auth/view/sign_in_screen.dart';
 import 'package:chatter_box/features/auth/view/sign_up_screen.dart';
@@ -5,6 +6,7 @@ import 'package:chatter_box/features/chat/models/chat_screen_args.dart';
 import 'package:chatter_box/features/chat/view/chat_list_screen.dart';
 import 'package:chatter_box/features/chat/view/chat_screen.dart';
 import 'package:chatter_box/features/settings/view/setting_screen.dart';
+import 'package:chatter_box/features/splash/view/splash_screen.dart';
 import 'package:chatter_box/routes/app_routes.dart';
 import 'package:get/get.dart';
 
@@ -14,18 +16,18 @@ class AppPages {
   ///
   /// Define Initial Screen Route
   ///
-  // static const initial = AppRoutes.splashScreen;
-  static const initial = AppRoutes.signInScreen;
+  static const initial = AppRoutes.splashScreen;
 
   static final routes = [
     ///
     /// onbaoding
     ///
-    // GetPage(
-    //   name: AppRoutes.splashScreen,
-    //   page: () => const SplashScreen(),
-    //   transition: transition,
-    // ),
+    GetPage(
+      name: AppRoutes.splashScreen,
+      page: () => const SplashScreen(),
+      transition: transition,
+      binding: AuthBinding(),
+    ),
 
     ///
     /// Auth
@@ -34,18 +36,21 @@ class AppPages {
       name: AppRoutes.signInScreen,
       page: () => SignInScreen(),
       transition: transition,
+      binding: AuthBinding(),
     ),
 
     GetPage(
       name: AppRoutes.signUpScreen,
       page: () => SignUpScreen(),
       transition: transition,
+      binding: AuthBinding(),
     ),
 
     GetPage(
       name: AppRoutes.resetPasswordScreen,
       page: () => ResetPasswordScreen(),
       transition: transition,
+      binding: AuthBinding(),
     ),
     GetPage(
       name: AppRoutes.chatListScreen,
@@ -65,6 +70,7 @@ class AppPages {
       name: AppRoutes.settingsScreen,
       page: () => SettingsScreen(),
       transition: transition,
+      binding: AuthBinding(),
     ),
   ];
 }
