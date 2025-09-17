@@ -15,8 +15,12 @@ class ChatListScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("ChatterBox"),
+        centerTitle: true,
         actions: [
-          IconButton(onPressed: () => Get.toNamed(AppRoutes.settingsScreen), icon: const Icon(Icons.settings)),
+          IconButton(
+            onPressed: () => Get.toNamed(AppRoutes.settingsScreen),
+            icon: const Icon(Icons.settings),
+          ),
         ],
       ),
       body: Column(
@@ -29,7 +33,7 @@ class ChatListScreen extends StatelessWidget {
                 color: isDarkMode
                     ? Colors.grey[850]
                     : Colors.grey[200], // Light/Dark mode background
-                borderRadius: BorderRadius.circular(30),
+                borderRadius: BorderRadius.circular(10),
               ),
               child: TextField(
                 decoration: InputDecoration(
@@ -99,7 +103,16 @@ class ChatListScreen extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          // For now, just navigate to a new chat screen
+          Get.toNamed(
+            AppRoutes.chatScreen,
+            arguments: ChatScreenArgs(
+              userName: "New User",
+              avatarUrl: "https://i.pravatar.cc/150?img=99",
+            ),
+          );
+        },
         backgroundColor: Colors.deepPurple,
         child: const Icon(Icons.chat, color: Colors.white),
       ),

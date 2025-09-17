@@ -11,11 +11,11 @@ class ThemeController extends GetxController {
 
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
     themeIndex.value = _loadThemeFromBox();
   }
 
+  /// Return the current ThemeMode based on saved value
   ThemeMode get themeMode {
     switch (themeIndex.value) {
       case 1:
@@ -27,6 +27,7 @@ class ThemeController extends GetxController {
     }
   }
 
+  /// Update the theme & persist it
   void setTheme(int index) {
     themeIndex.value = index;
     _saveThemeToBox(index);
@@ -34,6 +35,5 @@ class ThemeController extends GetxController {
   }
 
   int _loadThemeFromBox() => _box.read(_key) ?? 0;
-
   void _saveThemeToBox(int index) => _box.write(_key, index);
 }
