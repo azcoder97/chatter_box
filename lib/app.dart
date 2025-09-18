@@ -6,19 +6,22 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      getPages: AppPages.routes,
-      initialRoute: AppPages.initial,
-      initialBinding: ControllerBindings(), // 👈 This loads ThemeController
-      debugShowCheckedModeBanner: false,
-      title: 'ChatterBox',
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      themeMode: Get.find<ThemeController>().themeMode, // ✅ Use it directly
-    );
+    return Obx(() {
+      final themeController = Get.find<ThemeController>();
+      return GetMaterialApp(
+        getPages: AppPages.routes,
+        initialRoute: AppPages.initial,
+        initialBinding: ControllerBindings(), // 👈 This loads ThemeController
+        debugShowCheckedModeBanner: false,
+        title: 'ChatterBox',
+        theme: AppTheme.lightTheme,
+        darkTheme: AppTheme.darkTheme,
+        themeMode: themeController.themeMode, // ✅ Use it directly
+      );
+    });
   }
 }

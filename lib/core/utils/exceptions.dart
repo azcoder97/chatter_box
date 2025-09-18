@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'logger.dart';
 
 class FirebaseExceptionHandler {
   /// Handles all Firebase Auth related exceptions
   static String handleAuthException(FirebaseAuthException e) {
+    log.e('FirebaseAuthException: ${e.code}', error: e);
     switch (e.code) {
       case 'invalid-email':
         return 'The email address is invalid.';
@@ -39,6 +41,7 @@ class FirebaseExceptionHandler {
 
   /// Handles Firestore related exceptions
   static String handleFirestoreException(FirebaseException e) {
+    log.e('FirestoreException: ${e.code}', error: e);
     switch (e.code) {
       case 'cancelled':
         return 'The operation was cancelled.';
@@ -65,6 +68,7 @@ class FirebaseExceptionHandler {
 
   /// Handles Firebase Storage related exceptions
   static String handleStorageException(FirebaseException e) {
+    log.e('StorageException: ${e.code}', error: e);
     switch (e.code) {
       case 'object-not-found':
         return 'The requested file does not exist.';
@@ -94,6 +98,7 @@ class FirebaseExceptionHandler {
         return handleStorageException(e);
       }
     }
+    log.e('Unknown exception', error: e);
     return 'Unexpected error occurred. Please try again.';
   }
 }

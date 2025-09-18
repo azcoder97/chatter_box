@@ -1,4 +1,5 @@
 import 'package:chatter_box/core/bindings/auth_binding.dart';
+import 'package:chatter_box/core/bindings/chat_binding.dart';
 import 'package:chatter_box/features/auth/view/reset_password_screen.dart';
 import 'package:chatter_box/features/auth/view/sign_in_screen.dart';
 import 'package:chatter_box/features/auth/view/sign_up_screen.dart';
@@ -65,6 +66,7 @@ class AppPages {
         return ChatScreen(userName: args.userName, avatarUrl: args.avatarUrl);
       },
       transition: transition,
+      binding: ChatBinding(),
     ),
     GetPage(
       name: AppRoutes.settingsScreen,

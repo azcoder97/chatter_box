@@ -1,3 +1,4 @@
+import 'package:chatter_box/core/bindings/theme_controller.dart';
 import 'package:chatter_box/features/auth/services/firebase_auth_service.dart';
 import 'package:chatter_box/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -12,5 +13,8 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   // ✅ Make FirebaseAuthService globally available
   Get.put(FirebaseAuthService(), permanent: true);
+  // App-wide controller
+  Get.put(ThemeController());
+
   runApp(MyApp());
 }
