@@ -5,7 +5,6 @@ import 'package:chatter_box/core/utils/logger.dart';
 class FirestoreService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-
   ///Add a document to a collection
   Future<void> addDocument(String collection, Map<String, dynamic> data) async {
     try {
@@ -19,7 +18,9 @@ class FirestoreService {
   }
 
   ///Get a real-time stream of documents
-  Stream<QuerySnapshot<Map<String, dynamic>>> getCollectionStream(String collection) {
+  Stream<QuerySnapshot<Map<String, dynamic>>> getCollectionStream(
+    String collection,
+  ) {
     try {
       return _db.collection(collection).orderBy('timestamp').snapshots();
     } catch (e) {
@@ -30,7 +31,11 @@ class FirestoreService {
   }
 
   /// Update a document by ID
-  Future<void> updateDocument(String collection, String docId, Map<String, dynamic> data) async {
+  Future<void> updateDocument(
+    String collection,
+    String docId,
+    Map<String, dynamic> data,
+  ) async {
     try {
       await _db.collection(collection).doc(docId).update(data);
       log.i('Document $docId in $collection updated: $data');

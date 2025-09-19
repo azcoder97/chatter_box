@@ -23,10 +23,6 @@ class ChatMessage {
   }
 
   Map<String, dynamic> toMap() {
-    return {
-      'text': text,
-      'senderId': senderId,
-      'timestamp': timestamp
-    };
+    return {'text': text, 'senderId': senderId, 'timestamp': timestamp};
   }
 }

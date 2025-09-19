@@ -9,15 +9,13 @@ class ChatRepository {
   ChatRepository(this.firestore);
 
   Stream<List<ChatMessage>> getMessages() {
-    return firestore.getCollectionStream('chats').map(
-          (snapshot) {
-        final messages = snapshot.docs
-            .map((doc) => ChatMessage.fromMap(doc.id, doc.data()))
-            .toList();
-        log.d('Fetched ${messages.length} messages');
-        return messages;
-      },
-    );
+    return firestore.getCollectionStream('chats').map((snapshot) {
+      final messages = snapshot.docs
+          .map((doc) => ChatMessage.fromMap(doc.id, doc.data()))
+          .toList();
+      log.d('Fetched ${messages.length} messages');
+      return messages;
+    });
   }
 
   Future<void> sendMessage(ChatMessage message) async {
@@ -31,5 +29,3 @@ class ChatRepository {
     }
   }
 }
-
-
