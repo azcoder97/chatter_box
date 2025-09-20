@@ -193,8 +193,7 @@ class ChatScreen extends StatelessWidget {
                   final msg = messages[index];
                   return buildMessageBubble(
                     msg.text,
-                    msg.senderId ==
-                        "yourUserId", // ✅ Check if current user is sender
+                    msg.senderId == chatController.currentUserId, // ✅ Check if current user is sender
                     isDarkMode,
                   );
                 },
